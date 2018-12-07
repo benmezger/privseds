@@ -7,9 +7,10 @@ from .models import InjectedEmailContent, EmailContent
 class InjectedEmailContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = InjectedEmailContent
-        fields = ('subject', 'body')
+        fields = ("subject", "body")
+
 
 class EmailContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailContent
-        fields = ('subject', 'body', 'variables')
+        fields = ("subject", "body", "variables")

@@ -10,6 +10,7 @@ class EmailContentApiViewSet(RetrieveUpdateDestroyAPIView):
     """
     List, create or update a new email content
     """
+
     queryset = EmailContent.objects.all()
     serializer_class = EmailContentSerializer
 
@@ -17,5 +18,6 @@ class EmailContentApiViewSet(RetrieveUpdateDestroyAPIView):
 class InjectedEmailViewSet(ReadOnlyModelViewSet):
     queryset = InjectedEmailContent.objects.all()
     serializer_class = InjectedEmailContentSerializer
+
 
 # Create your views here.

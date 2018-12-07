@@ -10,88 +10,151 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Email',
+            name="Email",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_sent', models.BooleanField(default=False)),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("is_sent", models.BooleanField(default=False)),
+                (
+                    "created_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+            ],
+            options={"verbose_name": "My Email", "verbose_name_plural": "My Emails"},
+        ),
+        migrations.CreateModel(
+            name="EmailCategory",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                (
+                    "created_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
             ],
             options={
-                'verbose_name': 'My Email',
-                'verbose_name_plural': 'My Emails',
+                "verbose_name": "My Category",
+                "verbose_name_plural": "My Categories",
             },
         ),
         migrations.CreateModel(
-            name='EmailCategory',
+            name="EmailContent",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=300)),
+                ("body", models.TextField()),
+                ("variables", django.contrib.postgres.fields.jsonb.JSONField()),
+                ("is_html", models.BooleanField(default=True)),
+                (
+                    "created_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
             ],
             options={
-                'verbose_name': 'My Category',
-                'verbose_name_plural': 'My Categories',
+                "verbose_name": "My Mail Content",
+                "verbose_name_plural": "My Mail Contents",
             },
         ),
         migrations.CreateModel(
-            name='EmailContent',
+            name="EmailList",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=300)),
-                ('body', models.TextField()),
-                ('variables', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('is_html', models.BooleanField(default=True)),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=100)),
+                ("last_name", models.CharField(max_length=200)),
+                ("email", models.EmailField(max_length=254)),
+                ("sub_date", models.DateField(auto_now_add=True)),
+                ("is_subscribed", models.BooleanField(default=True)),
+                (
+                    "created_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
             ],
-            options={
-                'verbose_name': 'My Mail Content',
-                'verbose_name_plural': 'My Mail Contents',
-            },
+            options={"verbose_name": "My List", "verbose_name_plural": "My Lists"},
         ),
         migrations.CreateModel(
-            name='EmailList',
+            name="InjectedEmailContent",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=100)),
-                ('last_name', models.CharField(max_length=200)),
-                ('email', models.EmailField(max_length=254)),
-                ('sub_date', models.DateField(auto_now_add=True)),
-                ('is_subscribed', models.BooleanField(default=True)),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
-            ],
-            options={
-                'verbose_name': 'My List',
-                'verbose_name_plural': 'My Lists',
-            },
-        ),
-        migrations.CreateModel(
-            name='InjectedEmailContent',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=200)),
-                ('body', models.TextField()),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('content', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='content', to='manager.EmailContent')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=200)),
+                ("body", models.TextField()),
+                (
+                    "created_date",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                (
+                    "content",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="content",
+                        to="manager.EmailContent",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='emailcategory',
-            name='mailing_list',
-            field=models.ManyToManyField(to='manager.EmailList'),
+            model_name="emailcategory",
+            name="mailing_list",
+            field=models.ManyToManyField(to="manager.EmailList"),
         ),
         migrations.AddField(
-            model_name='email',
-            name='content',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='mail_content', to='manager.InjectedEmailContent'),
+            model_name="email",
+            name="content",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="mail_content",
+                to="manager.InjectedEmailContent",
+            ),
         ),
         migrations.AddField(
-            model_name='email',
-            name='email_list',
-            field=models.ManyToManyField(related_name='list', to='manager.EmailCategory'),
+            model_name="email",
+            name="email_list",
+            field=models.ManyToManyField(
+                related_name="list", to="manager.EmailCategory"
+            ),
         ),
     ]

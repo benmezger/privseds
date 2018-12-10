@@ -9,7 +9,7 @@ from .models import EmailList, EmailContent, Email, EmailCategory, InjectedEmail
 class EmailAdmin(admin.ModelAdmin):
     list_display = ("get_subject", "created_date", "is_sent", "is_scheduled")
     ordering = ("created_date",)
-    exclude = ("is_sent", "created_date",)
+    exclude = ("is_sent", "created_date")
     actions = ("send_mail",)
 
     def get_subject(self, obj):

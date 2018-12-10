@@ -19,7 +19,7 @@ urlpatterns = [
     path(
         "email-category/<int:pk>/",
         EmailCategoryViewSet.as_view(),
-        name="email-category"
+        name="email-category",
     ),
 ]
 

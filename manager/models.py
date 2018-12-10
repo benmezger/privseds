@@ -118,7 +118,6 @@ class Email(models.Model):
     def __unicode__(self):
         return f"Email({self.content.subject}, {self.created_date})"
 
-
     def get_list_of_emails(self):
         categories = [cat for cat in self.email_list.all()]
         emails = []

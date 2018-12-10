@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('manager', '0003_auto_20181207_1836'),
-    ]
+    dependencies = [("manager", "0003_auto_20181207_1836")]
 
     operations = [
         migrations.AlterField(
-            model_name='emailcategory',
-            name='created_date',
+            model_name="emailcategory",
+            name="created_date",
             field=models.DateTimeField(auto_now_add=True),
-        ),
+        )
     ]

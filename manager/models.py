@@ -11,7 +11,7 @@ from .utils import inject_to_content, send_mail
 class EmailCategory(models.Model):
     name = models.CharField(max_length=100)
     mailing_list = models.ManyToManyField("EmailList", related_name="user")
-    created_date = models.DateTimeField(default=timezone.now)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "My Category"

@@ -2,8 +2,12 @@ from django.conf import settings
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from manager.models import EmailContent, InjectedEmailContent
-from manager.serializers import EmailContentSerializer, InjectedEmailContentSerializer
+from manager.models import EmailContent, InjectedEmailContent, EmailCategory
+from manager.serializers import (
+    EmailContentSerializer,
+    InjectedEmailContentSerializer,
+    EmailCategorySerializer,
+)
 
 
 class EmailContentApiViewSet(RetrieveUpdateDestroyAPIView):
@@ -20,4 +24,6 @@ class InjectedEmailViewSet(ReadOnlyModelViewSet):
     serializer_class = InjectedEmailContentSerializer
 
 
-# Create your views here.
+class EmailCategoryViewSet(RetrieveUpdateDestroyAPIView):
+    queryset = EmailCategory.objects.all()
+    serializer_class = EmailCategorySerializer

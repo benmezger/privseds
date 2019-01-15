@@ -144,6 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = "/static/"
+    os.path.join(PROJECT_PATH, 'project_static'),
 
 # keys and endpoints
 

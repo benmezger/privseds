@@ -1,11 +1,11 @@
-from django.contrib import admin
-from django.contrib import messages
+from django.contrib import admin, messages
 
 from celery.result import AsyncResult
 
 from .models import EmailList, EmailContent, Email, EmailCategory, InjectedEmailContent
 
 
+@admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ("get_subject", "created_date", "is_sent", "is_scheduled")
     ordering = ("created_date",)
@@ -41,18 +41,23 @@ class EmailAdmin(admin.ModelAdmin):
             obj.send()
 
 
+@admin.register(EmailList)
 class EmailListAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "email")
     ordering = ("first_name",)
     exclude = ("created_date",)
 
 
+@admin.register(EmailContent)
 class EmailContentAdmin(admin.ModelAdmin):
     list_display = ("subject", "is_html", "created_date")
     ordering = ("created_date",)
     exclude = ("created_date",)
 
+    js = ("manager/js/jquery-3.3.1.min.js", "validade_email.js")
 
+
+@admin.register(InjectedEmailContent)
 class InjectedEmailContentAdmin(admin.ModelAdmin):
     list_display = ("subject", "created_date")
     ordering = ("created_date",)
@@ -66,12 +71,9 @@ class InjectedEmailContentAdmin(admin.ModelAdmin):
         return False
 
 
-# Register your models here.
-admin.site.register(EmailList, EmailListAdmin)
-admin.site.register(EmailContent, EmailContentAdmin)
-admin.site.register(Email, EmailAdmin)
-admin.site.register(EmailCategory)
-admin.site.register(InjectedEmailContent, InjectedEmailContentAdmin)
+@admin.register(EmailCategory)
+class EmailCategoryAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.site_header = "Email Manager"
 admin.site.site_title = "Email Manager"
